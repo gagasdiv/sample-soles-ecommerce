@@ -22,15 +22,17 @@ This project will dynamically make the queues, so it requires a Solace user that
 
 Each service contains code for publisher and subscriber services.
 
-## Postgres Database
+## Databases
 
-This project requires **one Postgres database**. Please set it up.
+This project requires **_three_ Postgres database**, one per service. Please set it up.
 
 The project uses the **Sequelize** library to migrate tables, so you don't need to make the tables yourself.
 
 Seeders are also automatically run, it will populate products and its stocks.
 
-Bit of history: it used to use local **Sqlite** to quickly spin up its own database, but then it couldn't share data, so a proper dbms was needed.
+The project uses separate databases instead of sharing one central database to show how services can reach "eventual consistency" (especially the product stock part) using events.
+
+Bit of history: it used to use local **Sqlite** to quickly spin up its own database, but then it encountered some problems with the data, so a proper dbms was needed, and an ORM library was introduced.
 
 ## Scripts/tools
 
@@ -71,7 +73,7 @@ Bit of history: it used to use local **Sqlite** to quickly spin up its own datab
 ### Database Setup
 
 - Set up a Postgres instance
-- Create an empty database for this project
+- Create _three_ empty databases for this project: product, order, inventory
 - Migrations will run automatically when project is run later
 
 ### Services Initialization:
