@@ -19,10 +19,13 @@ app.use((req, res, next) => {
 
 // Import and use product routes
 const productRoutes = require('./routes/productRoutes');
+const inventoryEventsRoutes = require('./eventRoutes/inventoryEventsRouter');
 app.use('/api/products', productRoutes);
+inventoryEventsRoutes();
 
 // Import the database configuration
 const db = require('./config/database');
+const models = require('./models');
 
 async function main() {
   // Connect to the database and start the server
@@ -30,9 +33,8 @@ async function main() {
     await db.authenticate();
     console.log('Database connected...');
     // Optionally sync models (force: false for production)
-    const models = require('./models');
-    models.sequelize.sync();
-    models.populate();
+    await models.sequelize.sync({ alter: true });
+    await models.populate();
   } catch (err) {
     console.error('Error connecting to the database: ', err);
   }

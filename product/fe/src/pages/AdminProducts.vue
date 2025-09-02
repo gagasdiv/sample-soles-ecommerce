@@ -106,12 +106,14 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 export default {
   name: 'AdminProducts',
   setup() {
     const products = ref([])
+
+    let fetchInterval = null;
 
     // State for new product form
     const newProduct = ref({
@@ -205,7 +207,11 @@ export default {
 
     onMounted(() => {
       fetchProducts()
-    })
+      fetchInterval = setInterval(fetchProducts, 10000);
+    });
+    onUnmounted(() => {
+      clearInterval(fetchInterval);
+    });
 
     return {
       products,

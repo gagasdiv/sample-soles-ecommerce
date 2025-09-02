@@ -193,6 +193,9 @@ export default {
           body: JSON.stringify(orderData),
         });
         if (!res.ok) throw new Error('Order submission failed');
+
+        alert('Successfully placed order');
+
         cart.clearCart();
         router.push('/');
       } catch (error) {

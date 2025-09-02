@@ -51,6 +51,7 @@
 <script>
 import { ref, onMounted } from 'vue'
 import { useCartStore } from '../stores/cartStore'
+import { onUnmounted } from 'vue'
 
 export default {
   name: 'Home',
@@ -74,8 +75,12 @@ export default {
 
     onMounted(() => {
       fetchProducts()
-      // Auto refresh the products list every 10 seconds
-      intervalId = setInterval(fetchProducts, 10000)
+      // Auto refresh the products list every 5 seconds
+      intervalId = setInterval(fetchProducts, 5000)
+    })
+
+    onUnmounted(() => {
+      clearInterval(intervalId)
     })
 
     return { products, addToCart, cart }

@@ -2,7 +2,7 @@
   "name": "product",
   "version": "1.0.0",
   "scripts": {
-    "dev": "concurrently \"pnpm --dir be run dev\" \"pnpm --dir fe run dev\""
+    "dev": "concurrently \"npm --prefix be run dev\" \"npm --prefix fe run dev\""
   },
   "devDependencies": {
     "concurrently": "^7.6.0"
