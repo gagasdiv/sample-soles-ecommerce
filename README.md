@@ -30,9 +30,11 @@ The project uses the **Sequelize** library to migrate tables, so you don't need 
 
 Seeders are also automatically run, it will populate products and its stocks.
 
-The project uses separate databases instead of sharing one central database to show how services can reach "eventual consistency" (especially the product stock part) using events.
+Why **_three_**?<br>
+The project uses separate databases instead of sharing one central database (& table) to simulate how different services can reach "eventual consistency" (albeit a simplistic case of the concept) -- especially the stock between Inventory (master data) and Product (frontend nearest for viewing, it's like caching) -- using events.<br>
+What this project is missing for the complete image of _eventual consistency_ is the **sync** part. Periodically, the Product Service (or a separate sync service) should request a full dump of the master stock data from backend (i.e the Inventory Service in this case). Compare data, and if there are differences, emit events, take down the product (to prevent further drift), and report/alert it because it needs to be looked into. What caused the drift? Which process/service caused it? Is this something consistent if similar parameters are given? Etc. Maybe sync like once per day, at night.
 
-Bit of history: it used to use local **Sqlite** to quickly spin up its own database, but then it encountered some problems with the data, so a proper dbms was needed, and an ORM library was introduced.
+Bit of history: it used to use local **Sqlite** to quickly spin up its own database, but then it encountered some problems with the data & migration, so a proper dbms was needed, and an ORM library was introduced.
 
 ## Scripts/tools
 
